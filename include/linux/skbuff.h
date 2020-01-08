@@ -41,7 +41,6 @@
 #include <linux/if_packet.h>
 #include <net/flow.h>
 
-
 /* The interface for checksum offload between the stack and networking drivers
  * is as follows...
  *
