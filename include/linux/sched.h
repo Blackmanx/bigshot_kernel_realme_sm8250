@@ -1554,6 +1554,9 @@ struct task_struct {
 	u64 get_mmlock_ts;
 	int get_mmlock;
 #endif
+#ifdef CONFIG_ANDROID_SIMPLE_LMK
+	struct task_struct		*simple_lmk_next;
+#endif
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
 #ifdef CONFIG_OPLUS_JANK_INFO
