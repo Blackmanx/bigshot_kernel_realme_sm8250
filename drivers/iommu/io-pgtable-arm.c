@@ -21,6 +21,7 @@
 #define pr_fmt(fmt)	"arm-lpae io-pgtable: " fmt
 
 #include <linux/atomic.h>
+#include <linux/bitops.h>
 #include <linux/iommu.h>
 #include <linux/io-pgtable.h>
 #include <linux/kernel.h>
@@ -32,6 +33,8 @@
 #include <trace/events/iommu.h>
 
 #include <asm/barrier.h>
+
+#include "io-pgtable.h"
 
 #define ARM_LPAE_MAX_ADDR_BITS		48
 #define ARM_LPAE_S2_MAX_CONCAT_PAGES	16
@@ -417,12 +420,13 @@ static int arm_lpae_init_pte(struct arm_lpae_io_pgtable *data,
 static arm_lpae_iopte arm_lpae_install_table(arm_lpae_iopte *table,
 					     arm_lpae_iopte *ptep,
 					     arm_lpae_iopte curr,
-					     struct io_pgtable_cfg *cfg,
+					     struct arm_lpae_io_pgtable *data,
 					     int ref_count)
 {
 	arm_lpae_iopte old, new;
+	struct io_pgtable_cfg *cfg = &data->iop.cfg;
 
-	new = __pa(table) | ARM_LPAE_PTE_TYPE_TABLE;
+	new = paddr_to_iopte(__pa(table), data) | ARM_LPAE_PTE_TYPE_TABLE;
 	if (cfg->quirks & IO_PGTABLE_QUIRK_ARM_NS)
 		new |= ARM_LPAE_PTE_NSTABLE;
 	iopte_tblcnt_set(&new, ref_count);
@@ -523,7 +527,7 @@ static int __arm_lpae_map(struct arm_lpae_io_pgtable *data, unsigned long iova,
 		if (!cptep)
 			return -ENOMEM;
 
-		pte = arm_lpae_install_table(cptep, ptep, 0, cfg, 0);
+		pte = arm_lpae_install_table(cptep, ptep, 0, data, 0);
 		if (pte)
 			__arm_lpae_free_pages(cptep, tblsz, cfg, cookie);
         trace_io_pgtable_install(cptep, ptep, *ptep, 0);
@@ -791,7 +795,7 @@ static size_t arm_lpae_split_blk_unmap(struct arm_lpae_io_pgtable *data,
 		child_cnt++;
 	}
 
-	pte = arm_lpae_install_table(tablep, ptep, blk_pte, cfg, child_cnt);
+	pte = arm_lpae_install_table(tablep, ptep, blk_pte, data, child_cnt);
     trace_io_pgtable_install(tablep, ptep, *ptep, 1);
 	if (pte != blk_pte) {
 		__arm_lpae_free_pages(tablep, tablesz, cfg, cookie);
