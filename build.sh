@@ -3,16 +3,12 @@
 #
 # Clone proton-clang toolchain if needed
 #
-if [ ! -d ./toolchain/ ];
-then
-    git clone --depth=1 git@github.com:kdrag0n/proton-clang.git ./toolchain/
-fi
 
 KERNEL_DEFCONFIG=vendor/sm8250_defconfig
 DIR=$PWD
 export ARCH=arm64
 export SUBARCH=arm64
-export CLANG_PATH=$DIR/toolchain/bin
+export CLANG_PATH="~/toolchains/bin"
 export PATH="$CLANG_PATH:$PATH"
 export CROSS_COMPILE=aarch64-linux-gnu-
 export CROSS_COMPILE_ARM32=arm-linux-gnueabi-

@@ -44,7 +44,7 @@ static char buf[8192] = {'\0'};
 #define GET_VERSION_INFO_TIMEOUT_MS     150000
 
 struct get_version_info {
-        
+
         struct delayed_work version_info_work;
         wait_queue_head_t info_thread_wq;
 };
@@ -122,7 +122,7 @@ static void  pstore_device_info_init(void )
 
         memset(record.buf, ' ', size);
         psinfo->write(&record);
-  
+
         psinfo->bufsize = oldsize ;
 }
 
@@ -150,9 +150,9 @@ static void pstore_write_device_info(const char *s, unsigned int c)
         }
 }
 
-static void board_hw_info_init()
+static void board_hw_info_init(void)
 {
-    scnprintf(pcb_version, sizeof(pcb_version), "%d", get_PCB_Version()); 
+    scnprintf(pcb_version, sizeof(pcb_version), "%d", get_PCB_Version());
     scnprintf(project_version, sizeof(project_version), "%d", get_project());
     scnprintf(rf_version, sizeof(rf_version), "%d", get_Modem_Version());
 }
