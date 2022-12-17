@@ -393,7 +393,7 @@ static int dns_hook_process_postrouting(struct sk_buff *skb, int hook, const str
     #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 4, 0))
         if (ip_route_me_harder(state->net, state->sk, rsp_skb, RTN_UNSPEC)) {
     #else
-        if (ip_route_me_harder(state->net, rsp_skb, RTN_UNSPEC)) {
+        if (ip_route_me_harder(state->net, state->sk, rsp_skb, RTN_UNSPEC)) {
     #endif
             LOGK(1, "ip_route_me_harder error");
             kfree_skb(rsp_skb);
@@ -405,7 +405,7 @@ static int dns_hook_process_postrouting(struct sk_buff *skb, int hook, const str
     #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 4, 0))
         if (ip6_route_me_harder(state->net, state->sk, rsp_skb)) {
     #else
-        if (ip6_route_me_harder(state->net, rsp_skb)) {
+        if (ip6_route_me_harder(state->net, state->sk, rsp_skb)) {
     #endif
             LOGK(1, "ip6_route_me_harder error");
             kfree_skb(rsp_skb);
