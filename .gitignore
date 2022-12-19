@@ -148,3 +148,5 @@ Android.bp
 # Ignore toolchain and out
 toolchain/
 out/
+
+zip.sh

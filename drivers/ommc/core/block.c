@@ -2793,7 +2793,7 @@ static int mmc_add_disk(struct mmc_blk_data *md)
 	int ret;
 	struct mmc_card *card = md->queue.card;
 
-	device_add_disk(md->parent, md->disk);
+	device_add_disk(md->parent, md->disk, NULL);
 	md->force_ro.show = force_ro_show;
 	md->force_ro.store = force_ro_store;
 	sysfs_attr_init(&md->force_ro.attr);
@@ -2949,7 +2949,7 @@ static int mmc_sector_count_open(struct inode *inode, struct file *filp)
 	u8 *ext_csd;
 	int err;
     unsigned int sector_count = 0;
-    
+
 	buf = kmalloc(SECTOR_COUNT_BUF_LEN + 1, GFP_KERNEL);
 	if (!buf)
 		return -ENOMEM;
@@ -2973,7 +2973,7 @@ static int mmc_sector_count_open(struct inode *inode, struct file *filp)
 	sector_count = (ext_csd[215]<<24) |(ext_csd[214]<<16)|
 			(ext_csd[213]<<8)|(ext_csd[212]);
 	n = sprintf(buf, "0x%08x\n", sector_count);
-    
+
 	if (n > SECTOR_COUNT_BUF_LEN) {
 		err = -EINVAL;
 		kfree(ext_csd);
@@ -3044,7 +3044,7 @@ static int mmc_life_time_open(struct inode *inode, struct file *filp)
 	int err;
 	unsigned char life_time_A = 0;
 	unsigned char life_time_B = 0;
-    
+
 	buf = kmalloc(LIFE_TIME_BUF_LEN + 1, GFP_KERNEL);
 	if (!buf)
 		return -ENOMEM;
