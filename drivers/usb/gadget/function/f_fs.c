@@ -1684,7 +1684,6 @@ ffs_fs_mount(struct file_system_type *t, int flags,
 	};
 	struct dentry *rv;
 	int ret;
-	void *ffs_dev;
 	struct ffs_data	*ffs;
 
 	ENTER();
@@ -3243,7 +3242,6 @@ static inline struct f_fs_opts *ffs_do_functionfs_bind(struct usb_function *f,
 	if (!ffs_opts->refcnt) {
 		ret = functionfs_bind(func->ffs, c->cdev);
 		if (ret) {
-			ffs_log("functionfs_bind returned %d", ret);
 			return ERR_PTR(ret);
 		}
 	}
