@@ -34,8 +34,6 @@
 
 #include <asm/barrier.h>
 
-#include "io-pgtable.h"
-
 #define ARM_LPAE_MAX_ADDR_BITS		48
 #define ARM_LPAE_S2_MAX_CONCAT_PAGES	16
 #define ARM_LPAE_MAX_LEVELS		4
@@ -184,6 +182,7 @@
 #define ARM_LPAE_MAIR_ATTR_IDX_DEV	2
 #define ARM_LPAE_MAIR_ATTR_IDX_UPSTREAM	3
 #define ARM_LPAE_MAIR_ATTR_IDX_LLC_NWA	0x4ULL
+#define ARM_LPAE_PTE_ADDR_MASK		GENMASK_ULL(47,12)
 
 /* IOPTE accessors */
 #define iopte_deref(pte, d)						\
@@ -245,6 +244,15 @@ typedef u64 arm_lpae_iopte;
 static arm_lpae_iopte iopte_val(arm_lpae_iopte table_pte)
 {
 	return table_pte & ~IOPTE_RESERVED_MASK;
+}
+
+static arm_lpae_iopte paddr_to_iopte(phys_addr_t paddr,
+				     struct arm_lpae_io_pgtable *data)
+{
+	arm_lpae_iopte pte = paddr;
+
+	/* Of the bits which overlap, either 51:48 or 15:12 are always RES0 */
+	return (pte | (pte >> (48 - 12))) & ARM_LPAE_PTE_ADDR_MASK;
 }
 
 static arm_lpae_iopte _iopte_bottom_ignored_val(arm_lpae_iopte table_pte)
