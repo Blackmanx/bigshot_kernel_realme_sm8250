@@ -1553,8 +1553,6 @@ static void sugov_tunables_save(struct cpufreq_policy *policy,
 #endif
 }
 
-struct gov_attr_set *attr_set = container_of(kobj, struct gov_attr_set, kobj);
-
 static void sugov_clear_global_tunables(void)
 {
 	if (!have_governor_per_policy())
