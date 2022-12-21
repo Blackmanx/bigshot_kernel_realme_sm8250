@@ -1297,6 +1297,7 @@ static int f2fs_encrypted_symlink_getattr(const struct path *path,
 					  struct kstat *stat, u32 request_mask,
 					  unsigned int query_flags)
 {
+	extern int fscrypt_symlink_getattr(const struct path *path, struct kstat *stat);
 	f2fs_getattr(path, stat, request_mask, query_flags);
 
 	return fscrypt_symlink_getattr(path, stat);
