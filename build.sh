@@ -24,3 +24,5 @@ make clean && make mrproper
 make CC=clang AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip O=out $KERNEL_DEFCONFIG
 
 make CC=clang AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip O=out -j$(nproc --all)
+
+./scripts/mkdtboimg.py create ./out/arch/arm64/boot/dtbo.img --page_size=4096 `find out/arch/arm64/boot/dts -name "*.dtbo"`
