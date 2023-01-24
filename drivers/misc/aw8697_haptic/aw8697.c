@@ -4834,7 +4834,7 @@ static int aw8697_haptic_play_mode(struct aw8697 *aw8697, unsigned char play_mod
             aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
                     AW8697_BIT_SYSCTRL_PLAY_MODE_MASK, AW8697_BIT_SYSCTRL_PLAY_MODE_RAM);
             aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
-                    AW8697_BIT_SYSCTRL_BST_MODE_MASK, AW8697_BIT_SYSCTRL_BST_MODE_BYPASS);
+                    AW8697_BIT_SYSCTRL_BST_MODE_MASK, AW8697_BIT_SYSCTRL_BST_MODE_BOOST);
             if(aw8697->auto_boost) {
                 aw8697_i2c_write_bits(aw8697, AW8697_REG_BST_AUTO,
                         AW8697_BIT_BST_AUTO_BST_RAM_MASK, AW8697_BIT_BST_AUTO_BST_RAM_DISABLE);
@@ -4858,7 +4858,7 @@ static int aw8697_haptic_play_mode(struct aw8697 *aw8697, unsigned char play_mod
             aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
                     AW8697_BIT_SYSCTRL_PLAY_MODE_MASK, AW8697_BIT_SYSCTRL_PLAY_MODE_RAM);
             aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
-                    AW8697_BIT_SYSCTRL_BST_MODE_MASK, AW8697_BIT_SYSCTRL_BST_MODE_BYPASS);
+                    AW8697_BIT_SYSCTRL_BST_MODE_MASK, AW8697_BIT_SYSCTRL_BST_MODE_BOOST);
             if(aw8697->auto_boost) {
                 aw8697_i2c_write_bits(aw8697, AW8697_REG_BST_AUTO,
                         AW8697_BIT_BST_AUTO_BST_RAM_MASK, AW8697_BIT_BST_AUTO_BST_RAM_DISABLE);
@@ -4883,7 +4883,7 @@ static int aw8697_haptic_play_mode(struct aw8697 *aw8697, unsigned char play_mod
             aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
                     AW8697_BIT_SYSCTRL_PLAY_MODE_MASK, AW8697_BIT_SYSCTRL_PLAY_MODE_RTP);
             aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
-                    AW8697_BIT_SYSCTRL_BST_MODE_MASK, AW8697_BIT_SYSCTRL_BST_MODE_BYPASS);
+                    AW8697_BIT_SYSCTRL_BST_MODE_MASK, AW8697_BIT_SYSCTRL_BST_MODE_BOOST);
             if(aw8697->auto_boost) {
                 aw8697_i2c_write_bits(aw8697, AW8697_REG_BST_AUTO,
                         AW8697_BIT_BST_AUTO_BST_RAM_MASK, AW8697_BIT_BST_AUTO_BST_RTP_DISABLE);
@@ -4907,7 +4907,7 @@ static int aw8697_haptic_play_mode(struct aw8697 *aw8697, unsigned char play_mod
             aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
                     AW8697_BIT_SYSCTRL_PLAY_MODE_MASK, AW8697_BIT_SYSCTRL_PLAY_MODE_RAM);
             aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
-                    AW8697_BIT_SYSCTRL_BST_MODE_MASK, AW8697_BIT_SYSCTRL_BST_MODE_BYPASS);
+                    AW8697_BIT_SYSCTRL_BST_MODE_MASK, AW8697_BIT_SYSCTRL_BST_MODE_BOOST);
             if(aw8697->auto_boost) {
                 aw8697_i2c_write_bits(aw8697, AW8697_REG_BST_AUTO,
                         AW8697_BIT_BST_AUTO_BST_RAM_MASK, AW8697_BIT_BST_AUTO_BST_RAM_DISABLE);
@@ -4931,7 +4931,7 @@ static int aw8697_haptic_play_mode(struct aw8697 *aw8697, unsigned char play_mod
             aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
                     AW8697_BIT_SYSCTRL_PLAY_MODE_MASK, AW8697_BIT_SYSCTRL_PLAY_MODE_CONT);
             aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
-                    AW8697_BIT_SYSCTRL_BST_MODE_MASK, AW8697_BIT_SYSCTRL_BST_MODE_BYPASS);
+                    AW8697_BIT_SYSCTRL_BST_MODE_MASK, AW8697_BIT_SYSCTRL_BST_MODE_BOOST);
             if(aw8697->auto_boost) {
                 aw8697_i2c_write_bits(aw8697, AW8697_REG_BST_AUTO,
                         AW8697_BIT_BST_AUTO_BST_RAM_MASK, AW8697_BIT_BST_AUTO_BST_RAM_DISABLE);
@@ -9172,7 +9172,7 @@ static ssize_t aw8697_short_check_show(struct device *dev, struct device_attribu
 	aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
 		AW8697_BIT_SYSCTRL_RAMINIT_MASK, AW8697_BIT_SYSCTRL_RAMINIT_EN);
 	aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
-		AW8697_BIT_SYSCTRL_BST_MODE_MASK, AW8697_BIT_SYSCTRL_BST_MODE_BYPASS);
+		AW8697_BIT_SYSCTRL_BST_MODE_MASK, AW8697_BIT_SYSCTRL_BST_MODE_BOOST);
 
 	aw8697_i2c_write_bits(aw8697, AW8697_REG_ANACTRL,
 		AW8697_BIT_ANACTRL_HD_PD_MASK, AW8697_BIT_ANACTRL_HD_HZ_EN);
@@ -9461,7 +9461,7 @@ static ssize_t aw8697_lra_resistance_show(struct device *dev, struct device_attr
     aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
             AW8697_BIT_SYSCTRL_RAMINIT_MASK, AW8697_BIT_SYSCTRL_RAMINIT_EN);
     aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
-            AW8697_BIT_SYSCTRL_BST_MODE_MASK, AW8697_BIT_SYSCTRL_BST_MODE_BYPASS);
+            AW8697_BIT_SYSCTRL_BST_MODE_MASK, AW8697_BIT_SYSCTRL_BST_MODE_BOOST);
 
 
     aw8697_i2c_write_bits(aw8697, AW8697_REG_ANACTRL,
@@ -9684,7 +9684,7 @@ static ssize_t aw8697_ram_vbat_comp_store(struct device *dev, struct device_attr
     if(val) {
         aw8697->ram_vbat_comp = AW8697_HAPTIC_RAM_VBAT_COMP_ENABLE;
     } else {
-        aw8697->ram_vbat_comp = AW8697_HAPTIC_RAM_VBAT_COMP_DISABLE;
+	        aw8697->ram_vbat_comp = AW8697_HAPTIC_RAM_VBAT_COMP_DISABLE;
     }
     mutex_unlock(&aw8697->lock);
 
