@@ -36,7 +36,7 @@ static int dwc3_ulpi_busyloop(struct dwc3 *dwc, u8 addr, bool read)
 	while (count--) {
 		ndelay(ns);
 		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYACC(0));
-		if (reg & DWC3_GUSB2PHYACC_DONE)
+		if (!(reg & DWC3_GUSB2PHYACC_BUSY))
 			return 0;
 		cpu_relax();
 	}
