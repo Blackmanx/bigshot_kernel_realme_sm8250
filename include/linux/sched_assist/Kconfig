@@ -1,8 +1,3 @@
-config OPLUS_FEATURE_SCHED_ASSIST
-	tristate "sched_assist"
-	default n
-	help
-	  turning sched for ui, render and so on to improve UX
 config OPLUS_FEATURE_SCHED_SPREAD
 	bool "sched_spread"
 	default n

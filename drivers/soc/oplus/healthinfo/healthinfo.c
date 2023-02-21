@@ -30,9 +30,6 @@
 #define BUFFER_SIZE_S 256
 #define BUFFER_SIZE_M 512
 #define BUFFER_SIZE_L 1024
-#ifdef OPLUS_FEATURE_SCHED_ASSIST
-extern bool test_task_ux(struct task_struct *task);
-#endif
 #ifdef CONFIG_OPLUS_JANK
 extern u32 get_cpu_load(u32 win_cnt, struct cpumask *mask);
 #endif
@@ -163,9 +160,6 @@ static inline void ohm_sched_stat_record_common(struct sched_stat_para *sched_st
         }
 }
 
-#ifdef OPLUS_FEATURE_SCHED_ASSIST
-extern bool test_task_ux(struct task_struct *task);
-#endif
 void ohm_schedstats_record(int sched_type, struct task_struct *task, u64 delta_ms)
 {
     struct sched_stat_para *sched_stat = &sched_para[sched_type];
@@ -189,11 +183,6 @@ void ohm_schedstats_record(int sched_type, struct task_struct *task, u64 delta_m
                 ohm_action_trig(sched_type);
         }
     }
-#ifdef OPLUS_FEATURE_SCHED_ASSIST
-	if (test_task_ux(task)){
-        ohm_sched_stat_record_common(sched_stat, &sched_stat->ux, delta_ms);
-    }
-#endif
     return;
 }
 
@@ -517,7 +506,7 @@ static ssize_t emmcio_read(struct file *filp, char __user *buff, size_t count, l
       char page[1024] = {0};
       struct sched_stat_para *sched_stat = &sched_para[OHM_SCHED_EMMCIO];
 
-      len = LATENCY_STRING_FORMAT(page, emmcio, sched_stat);     
+      len = LATENCY_STRING_FORMAT(page, emmcio, sched_stat);
 
       return sched_data_to_user(buff, count, off, page, len);
 }
@@ -953,7 +942,7 @@ static int __init healthinfo_init(void)
 		ohm_err("create emmc_driver_io_wait proc failed.\n");
 		goto ERROR_INIT_VERSION;
 	}
-	
+
 	pentry = proc_create("dstate", S_IRUGO, healthinfo, &proc_dstate_fops);
 	if(!pentry) {
 		ohm_err("create dstate proc failed.\n");
@@ -965,7 +954,7 @@ static int __init healthinfo_init(void)
 		ohm_err("create iowait_hung proc failed.\n");
 		goto ERROR_INIT_VERSION;
 	}
-	
+
 #ifdef CONFIG_OPLUS_MEM_MONITOR
 	pentry = proc_create("alloc_wait", S_IRUGO, healthinfo, &proc_alloc_wait_fops);
 	if(!pentry) {
@@ -986,7 +975,7 @@ static int __init healthinfo_init(void)
     }
 #ifdef OPLUS_FEATURE_UFSPLUS
 #if defined(CONFIG_UFSFEATURE)
-#if 0 
+#if 0
 	pentry = proc_create("ufs_feature", S_IRUGO, healthinfo, &proc_ufsf_para_fops);
 	if(!pentry) {
 		ohm_err("create ufs_feature proc failed.\n");
