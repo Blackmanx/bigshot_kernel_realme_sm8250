@@ -1,6 +1,5 @@
 /***********************************************************
 ** Copyright (C), 2008-2019, OPPO Mobile Comm Corp., Ltd.
-** OPLUS_FEATURE_POWERINFO_RPMH
 ** File: - rpmh_modem_sleepinfo.c
 ** Description: Add a proc node to support the function that make
 **              a buffer of modem subsystem sleep info
