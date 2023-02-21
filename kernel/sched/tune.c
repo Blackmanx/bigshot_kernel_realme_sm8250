@@ -115,11 +115,6 @@ struct schedtune {
 	/* Hint to bias scheduling of tasks on that SchedTune CGroup
 	 * towards idle CPUs */
 	int prefer_idle;
-#ifdef OPLUS_FEATURE_POWER_EFFICIENCY
-	bool discount_wait_time;
-	bool top_task_filter;
-	bool ed_task_filter;
-#endif
 };
 
 static inline struct schedtune *css_st(struct cgroup_subsys_state *css)
@@ -154,11 +149,6 @@ root_schedtune = {
 	.sched_boost_enabled = true,
 	.colocate = false,
 	.colocate_update_disabled = false,
-#endif
-#ifdef OPLUS_FEATURE_POWER_EFFICIENCY
-	.discount_wait_time = false,
-	.top_task_filter = false,
-	.ed_task_filter = false,
 #endif
 	.prefer_idle = 0,
 };
@@ -753,31 +743,6 @@ boost_write(struct cgroup_subsys_state *css, struct cftype *cft,
 	return 0;
 }
 
-#ifdef OPLUS_FEATURE_POWER_EFFICIENCY
-#define PE_FUNC(NAME) \
-static u64 NAME##_read(struct cgroup_subsys_state *css, \
-		struct cftype *cft) \
-{ \
-	struct schedtune *st = css_st(css); \
-	return st->NAME; \
-} \
- \
-static int \
-NAME##_write(struct cgroup_subsys_state *css, struct cftype *cft, \
-		u64 NAME) \
-{ \
-	struct schedtune *st = css_st(css); \
- \
-	st->NAME = !!NAME; \
- \
-	return 0; \
-}
-
-PE_FUNC(discount_wait_time)
-PE_FUNC(top_task_filter)
-PE_FUNC(ed_task_filter)
-#endif /* OPLUS_FEATURE_POWER_EFFICIENCY */
-
 static struct cftype files[] = {
 #ifdef CONFIG_SCHED_WALT
 	{
@@ -802,23 +767,6 @@ static struct cftype files[] = {
 		.write_u64 = prefer_idle_write,
 	},
 
-#ifdef OPLUS_FEATURE_POWER_EFFICIENCY
-	{
-		.name = "discount_wait_time",
-		.read_u64 = discount_wait_time_read,
-		.write_u64 = discount_wait_time_write,
-	},
-	{
-		.name = "top_task_filter",
-		.read_u64 = top_task_filter_read,
-		.write_u64 = top_task_filter_write,
-	},
-	{
-		.name = "ed_task_filter",
-		.read_u64 = ed_task_filter_read,
-		.write_u64 = ed_task_filter_write,
-	},
-#endif /* OPLUS_FEATURE_POWER_EFFICIENCY */
 	{ }	/* terminate */
 };
 
