@@ -182,10 +182,6 @@ static inline void free_task_struct(struct task_struct *tsk)
 
 #ifndef CONFIG_ARCH_THREAD_STACK_ALLOCATOR
 
-#ifdef CONFIG_OPLUS_FEATURE_UID_PERF
-extern void uid_perf_work_add(struct task_struct *task, bool force);
-#endif
-
 /*
  * Allocate pages if THREAD_SIZE is >= PAGE_SIZE, otherwise use a
  * kmemcache based allocator.
@@ -2250,18 +2246,6 @@ static __latent_entropy struct task_struct *copy_process(
 		goto bad_fork_cancel_cgroup;
 	}
 
-
-#ifdef CONFIG_OPLUS_FEATURE_UID_PERF
-	/* should init uid pevents before task added into any link */
-	memset(p->uid_pevents, 0, sizeof(struct perf_event *) * UID_PERF_EVENTS);
-	memset(p->uid_counts, 0, sizeof(long long) * UID_PERF_EVENTS);
-	memset(p->uid_prev_counts, 0, sizeof(long long) * UID_PERF_EVENTS);
-	memset(p->uid_leaving_counts, 0, sizeof(long long) * UID_PERF_EVENTS);
-	memset(p->uid_group, 0, sizeof(long long) * UID_GROUP_SIZE);
-	memset(p->uid_group_prev_counts, 0, sizeof(long long) * UID_GROUP_SIZE);
-	memset(p->uid_group_snapshot_prev_counts, 0, sizeof(long long) * UID_GROUP_SIZE);
-#endif
-
 	init_task_pid_links(p);
 	if (likely(p->pid)) {
 		ptrace_init_task(p, (clone_flags & CLONE_PTRACE) || trace);
@@ -2329,10 +2313,6 @@ static __latent_entropy struct task_struct *copy_process(
 #endif
 	}
 
-#ifdef CONFIG_OPLUS_FEATURE_UID_PERF
-	if (!IS_ERR(p))
-		uid_perf_work_add(p, false);
-#endif
 	return p;
 
 bad_fork_cancel_cgroup:

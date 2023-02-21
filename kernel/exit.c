@@ -80,10 +80,6 @@
 #include <linux/tpd/tpd.h>
 #endif
 
-#ifdef CONFIG_OPLUS_FEATURE_UID_PERF
-extern void uid_check_out_pevent(struct task_struct *task);
-#endif
-
 static void __unhash_process(struct task_struct *p, bool group_dead)
 {
 	nr_threads--;
@@ -897,10 +893,6 @@ void __noreturn do_exit(long code)
 
 	exit_signals(tsk);  /* sets PF_EXITING */
 	sched_exit(tsk);
-
-#ifdef CONFIG_OPLUS_FEATURE_UID_PERF
-	uid_check_out_pevent(tsk);
-#endif
 
 	/* sync mm's RSS info before statistics gathering */
 	if (tsk->mm)
