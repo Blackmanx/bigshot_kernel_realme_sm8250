@@ -4354,9 +4354,9 @@ static void oplus_chg_set_float_voltage(struct oplus_chg_chip *chip)
 static void oplus_chg_set_iterm(struct oplus_chg_chip *chip)
 {
 	int iterm =  chip->limits.iterm_ma;
-	
+
 	if (oplus_voocphy_get_bidirect_cp_support()) {
-		iterm = 2 * iterm; 
+		iterm = 2 * iterm;
 	}
 	chip->chg_ops->term_current_set(chip->limits.iterm_ma);
 }
@@ -7255,7 +7255,7 @@ static void oplus_chg_update_ui_soc(struct oplus_chg_chip *chip)
 #else
 	} else if (chip->charger_exist && chip->batt_exist && (CHARGING_STATUS_FAIL != chip->charging_state)
 					&& chip->mmi_chg && (chip->stop_chg == 1 || chip->charger_type == 5)) {
-#endif        
+#endif
 		chip->sleep_tm_sec = 0;
 		chip->prop_status = POWER_SUPPLY_STATUS_CHARGING;
 		if (chip->smooth_soc == chip->ui_soc) {
@@ -9074,7 +9074,7 @@ static void oplus_chg_reset_adapter_work(struct work_struct *work) {
 	}
 }
 
-void oplus_chg_turn_on_charging_in_work()
+void oplus_chg_turn_on_charging_in_work(void)
 {
 	if (g_charger_chip)
 		schedule_delayed_work(&g_charger_chip->turn_on_charging_work, 0);
@@ -10015,7 +10015,7 @@ void oplus_smart_charge_by_shell_temp(struct oplus_chg_chip *chip, int val) {
 		chip->cool_down_done = true;
 		chip->cool_down_force_5v = false;
 		chip->chg_ctrl_by_cool_down = true;
-		if ((subtype == CHARGER_SUBTYPE_FASTCHG_VOOC) 
+		if ((subtype == CHARGER_SUBTYPE_FASTCHG_VOOC)
 				&& (oplus_chg_get_voocphy_support() == AP_SINGLE_CP_VOOCPHY
 				|| oplus_chg_get_voocphy_support() == AP_DUAL_CP_VOOCPHY)) {
 			chip->screenoff_curr = val;
@@ -10491,13 +10491,13 @@ int oplus_chg_match_temp_for_chging(void)
 	if (!g_charger_chip) {
 		return chging_temp;
 	}
-	
+
 	if (oplus_switching_support_parallel_chg()) {
 		batt_temp = oplus_gauge_get_batt_temperature();
 		sub_batt_temp = oplus_gauge_get_sub_batt_temperature();
 		g_charger_chip->sub_batt_temperature = sub_batt_temp;
 		g_charger_chip->tbatt_temp = batt_temp;
-		
+
 		if (oplus_chg_override_by_shell_temp(batt_temp)) {
 			shell_temp = oplus_chg_get_shell_temp();
 			diff = shell_temp - batt_temp;

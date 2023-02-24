@@ -461,7 +461,7 @@ static int oplus_chg_get_real_charger_type(struct oplus_chg_chip *chip) {
 	if(chip->chg_ops->get_charger_subtype()) {
 		if (chip->chg_ops->get_charger_subtype() == CHARGER_SUBTYPE_PD) {
 			return POWER_SUPPLY_TYPE_USB_PD;
-		} 
+		}
 #if defined(CONFIG_OPLUS_HVDCP_SUPPORT) || \
     defined(CONFIG_OPLUS_CHARGER_MTK6785) || \
     !defined(CONFIG_OPLUS_CHARGER_MTK)
@@ -1452,7 +1452,7 @@ static int oplus_get_chg_slow_reason(struct oplus_chg_chip *chip) {
 		}
 		if(oplus_chg_debug_notify_policy[i].policy == OPLUS_CHG_NOTIFY_TOTAL) {
 			if(oplus_chg_debug_info.chg_cnt[i]
-				*5*100/oplus_chg_debug_info.total_time_count > 
+				*5*100/oplus_chg_debug_info.total_time_count >
 				oplus_chg_debug_notify_policy[i].percent) {
 				strcpy(oplus_chg_debug_info.flag_reason,
 					oplus_chg_debug_notify_policy[i].reason);
@@ -1851,7 +1851,7 @@ static int oplus_chg_soc_notified_flag_is_set(int flag)
 
 static int oplus_chg_chg_batt_capacity_jump_check(struct oplus_chg_chip *chip)
 {
-	static ui_to_soc_jump_flag = false;
+	static int ui_to_soc_jump_flag = false;
 
 	union power_supply_propval pval = {0, };
 	int status;
@@ -1966,7 +1966,7 @@ static int oplus_chg_chg_batt_capacity_jump_check(struct oplus_chg_chip *chip)
 }
 
 static int oplus_chg_mcu_update_check(struct oplus_chg_chip *chip) {
-	static flag = false;
+	static int flag = false;
 
 	if((charger_abnormal_log == CRITICAL_LOG_VOOC_FW_UPDATE_ERR && flag == false)
 		|| (mcu_update_flag == 1 && (chg_check_point_debug&OPEN_LOG_BIT))){
@@ -2030,7 +2030,7 @@ void oplus_chg_vooc_mcu_error( int error ) {
 }
 
 /*add for wireless chg*/
-static void oplus_chg_wireless_udpate_param()
+static void oplus_chg_wireless_udpate_param(void)
 {
 	struct oplus_wpc_chip *wpc_chip = NULL;
 	oplus_get_wpc_chip_handle(&wpc_chip);
