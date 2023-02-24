@@ -3,10 +3,6 @@
 #
 # Clone proton-clang toolchain if needed
 #
-if [ ! -d ./toolchain/ ];
-then
-    git clone --depth=1 git@github.com:kdrag0n/proton-clang.git ./toolchain/
-fi
 
 KERNEL_DEFCONFIG=vendor/sm8250_defconfig
 DIR=$PWD
@@ -25,6 +21,6 @@ echo
 
 make clean && make mrproper
 
-make CC=clang AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip O=out $KERNEL_DEFCONFIG
+make CC=clang AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip LLVM=1 O=out $KERNEL_DEFCONFIG
 
-make CC=clang AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip O=out -j$(nproc --all)
+make CC=clang AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip LLVM=1 O=out -j$(nproc --all)
