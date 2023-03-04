@@ -1483,7 +1483,7 @@ int subsystem_restart_dev(struct subsys_device *dev)
 		break;
 	case RESET_SOC:
 	#ifdef VENDOR_EDIT
-		if (!strcmp(name, "esoc0") && oem_is_fulldump()) {
+		if (!strcmp(name, "esoc0")) {
 			if (!direct_panic) {
 				delay_panic = true;
 			}
